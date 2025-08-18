@@ -7,7 +7,6 @@ const Home = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
       <Header />
-      <p>hello</p>
       {/* Hero Section */}
       <section className="bg-[url('/images/home-page-background.jpg')] bg-cover bg-center h-[70vh] flex items-center justify-center relative">
         <div className="absolute inset-0 bg-black/50"></div>
