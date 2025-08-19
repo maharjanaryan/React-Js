@@ -1,9 +1,10 @@
 import './App.css'
-import Home from './pages/Home';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from './pages/Login';
 import AboutUs from './pages/aboutus';
 import CafeGallery from './pages/CafeGallery';
+import Home from './pages/home';
+import Layout from './pages/adminlayout.jsx/layout';
 
 
 
@@ -11,8 +12,8 @@ import CafeGallery from './pages/CafeGallery';
 function App() {
 
   return (
-    <div>
-
+    <>
+  
       <BrowserRouter>
       <Routes>
 
@@ -23,11 +24,19 @@ function App() {
       <Route path="/gallery" element={<CafeGallery />} />
 
 
+      <Route path="/adminlayout/layout" element={<Layout />} >
+
+
+
+
+
+      </Route>
       </Routes>
       
       </BrowserRouter>
+    </>
 
-    </div>
+   
   );
 }
 

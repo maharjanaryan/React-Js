@@ -88,7 +88,7 @@ const Login = () => {
     // Attempt login
     const loginStatus = doLogin(email, password);
     if (loginStatus) {
-      navigate('/admin/dashboard');
+      navigate('/adminlayout/layout');
     } else {
       setLoginError('Invalid email or password');
     }
