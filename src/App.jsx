@@ -1,43 +1,45 @@
-import './App.css'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Login from './pages/Login';
-import AboutUs from './pages/aboutus';
-import CafeGallery from './pages/CafeGallery';
-import Home from './pages/home';
-import Layout from './pages/adminlayout.jsx/layout';
+// src/App.jsx
+import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Public pages
+import Home from './pages/Home';
+import Login from './pages/Login';
+import AboutUs from './pages/AboutUs';
+import CafeGallery from './pages/CafeGallery';
+import AdminOverview from './pages/adminlayout/AdminOverview';
+import Layout from './pages/adminlayout/layout';
+import StaffManagement from './pages/adminlayout/StaffManage';
+import Analytics from './pages/adminlayout/Analytics';
+import Products from './pages/adminlayout/Products.jsx';
 
 
 
 function App() {
-
   return (
-    <>
-  
-      <BrowserRouter>
+    <BrowserRouter>
       <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/gallery" element={<CafeGallery />} />
 
-       {/* <Route path="/data" element={<Student/>} /> */}
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/aboutus" element={<AboutUs />} />
-      <Route path="/gallery" element={<CafeGallery />} />
-
-
-      <Route path="/adminlayout/layout" element={<Layout />} >
-
-
-
-
-
-      </Route>
-      </Routes>
-      
-      </BrowserRouter>
-    </>
-
+        {/* Admin routes */}
+        <Route path="/adminlayout/layout" element={<Layout />}>
+          {/* Default admin page */}
+          <Route index element={<AdminOverview />} />
+          {/* Specific admin pages */}
+          <Route path="overview" element={<AdminOverview />} />
+          <Route path="staffmanage" element={<StaffManagement />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="products" element={<Products />} />
    
+        </Route>
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App
+export default App;
