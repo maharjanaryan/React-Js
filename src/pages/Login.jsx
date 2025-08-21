@@ -9,6 +9,10 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [loginError, setLoginError] = useState("");
 
+  
+  const validEmail = "admin@gmail.com";
+  const validPassword = "12345";
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailError("");
@@ -22,19 +26,22 @@ const Login = () => {
   };
 
   const handleBtnClick = () => {
-    let error = false;
-    if (email === "") {
-      setEmailError("Email is required");
-      error = true;
-    }
-    if (password === "") {
-      setPasswordError("Password is required");
-      error = true;
-    }
-    if (error) return;
+    let hasError = false;
 
-    // For demo purposes - simulate successful login
-    if (email && password) {
+    if (email.trim() === "") {
+      setEmailError("Email is required");
+      hasError = true;
+    }
+
+    if (password.trim() === "") {
+      setPasswordError("Password is required");
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Check credentials
+    if (email === validEmail && password === validPassword) {
       navigate("/adminlayout/layout");
     } else {
       setLoginError("Invalid email or password");
@@ -45,12 +52,10 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-400 to-black relative">
       {/* Fallback background pattern */}
       <div className="absolute inset-0 bg-[url('/images/outdoor.png')] opacity-20"></div>
-      
+
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md p-8 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Login 
-        </h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Login</h2>
 
         {/* Email */}
         <div className="mb-5">
@@ -97,7 +102,6 @@ const Login = () => {
           Login
         </button>
 
-
         {/* Signup */}
         <p className="text-center text-gray-700">
           Don't have an account?{" "}
@@ -109,12 +113,6 @@ const Login = () => {
           </NavLink>
         </p>
       </div>
-
-      <style jsx>{`
-        .min-h-screen {
-          min-height: 100vh;
-        }
-      `}</style>
     </div>
   );
 };

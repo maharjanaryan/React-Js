@@ -34,7 +34,7 @@ const Signup = () => {
       console.log("Form submitted:", { firstName, lastName, email, password });
 
       // For demo - navigate to login
-      navigate("/admin/login");
+      navigate("/");
     }
   };
 
