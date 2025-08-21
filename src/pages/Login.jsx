@@ -1,158 +1,120 @@
-// import { NavLink } from "react-router-dom";
-
-// const Login = () => {
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow">
-//         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        
-//         <div className="mb-4">
-//           <label className="block text-gray-700 mb-2">Email:</label>
-//           <input
-//             type="email"
-//             className="w-full px-3 py-2 border border-gray-300 rounded"
-//             placeholder="Enter your email"
-//           />
-//         </div>
-        
-//         <div className="mb-6">
-//           <label className="block text-gray-700 mb-2">Password:</label>
-//           <input
-//             type="password"
-//             className="w-full px-3 py-2 border border-gray-300 rounded"
-//             placeholder="Enter your password"
-//           />
-//         </div>
-        
-//         <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mb-4">
-//           Login
-//         </button>
-        
-//         <NavLink 
-//           to="/admin/signup" 
-//           className="block text-center text-blue-500 hover:text-blue-700"
-//         >
-//           Sign Up
-//         </NavLink>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { doLogin } from "../services/auth";
-// import { doLogin } from '../../services/auth';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  // Handle email input changes and clear any existing email errors
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailError("");
+    setLoginError("");
   };
 
-  // Handle password input changes and clear any existing password errors
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setPasswordError("");
+    setLoginError("");
   };
 
-  // Validate and submit the login form
   const handleBtnClick = () => {
     let error = false;
-    
-    // Validate email field
-    if (email === '') {
+    if (email === "") {
       setEmailError("Email is required");
       error = true;
     }
-    
-    // Validate password field
-    if (password === '') {
+    if (password === "") {
       setPasswordError("Password is required");
       error = true;
     }
-
-    // Return if any validation errors exist
     if (error) return;
 
-    // Attempt login
-    const loginStatus = doLogin(email, password);
-    if (loginStatus) {
-      navigate('/adminlayout/layout');
+    // For demo purposes - simulate successful login
+    if (email && password) {
+      navigate("/adminlayout/layout");
     } else {
-      setLoginError('Invalid email or password');
+      setLoginError("Invalid email or password");
     }
   };
 
   return (
-    /* Main container with gray background */
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      {/* Login card with white background and shadow */}
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow">
-        {/* Login title */}
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        
-        {/* Email input field */}
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Email:</label>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-400 to-black relative">
+      {/* Fallback background pattern */}
+      <div className="absolute inset-0 bg-[url('/images/outdoor.png')] opacity-20"></div>
+      
+      {/* Login Card */}
+      <div className="relative z-10 w-full max-w-md p-8 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Login 
+        </h2>
+
+        {/* Email */}
+        <div className="mb-5">
+          <label className="block text-gray-700 font-medium mb-2">Email</label>
           <input
             type="email"
-            className={`w-full px-3 py-2 border ${emailError ? 'border-red-500' : 'border-gray-300'} rounded`}
             placeholder="Enter your email"
             value={email}
             onChange={handleEmailChange}
+            className={`w-full px-5 py-3 border ${
+              emailError ? "border-red-500" : "border-gray-300"
+            } rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-600 transition`}
           />
-          {/* Email error message */}
           {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
         </div>
-        
-        {/* Password input field */}
+
+        {/* Password */}
         <div className="mb-6">
-          <label className="block text-gray-700 mb-2">Password:</label>
+          <label className="block text-gray-700 font-medium mb-2">Password</label>
           <input
             type="password"
-            className={`w-full px-3 py-2 border ${passwordError ? 'border-red-500' : 'border-gray-300'} rounded`}
             placeholder="Enter your password"
             value={password}
             onChange={handlePasswordChange}
+            className={`w-full px-5 py-3 border ${
+              passwordError ? "border-red-500" : "border-gray-300"
+            } rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-600 transition`}
           />
-          {/* Password error message */}
           {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
         </div>
-        
-        {/* General login error message */}
+
+        {/* Login error */}
         {loginError && (
-          <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
             {loginError}
           </div>
         )}
-        
+
         {/* Login button */}
-        <button 
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mb-4 transition-colors"
+        <button
           onClick={handleBtnClick}
+          className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-xl shadow-md transition-colors mb-4"
         >
           Login
         </button>
-        
-        {/* Sign up link */}
-        <NavLink 
-          to="/admin/signup" 
-          className="block text-center text-blue-500 hover:text-blue-700 transition-colors"
-        >
-          Sign Up
-        </NavLink>
+
+
+        {/* Signup */}
+        <p className="text-center text-gray-700">
+          Don't have an account?{" "}
+          <NavLink
+            to="/admin/signup"
+            className="text-yellow-600 font-semibold hover:underline"
+          >
+            Sign Up
+          </NavLink>
+        </p>
       </div>
+
+      <style jsx>{`
+        .min-h-screen {
+          min-height: 100vh;
+        }
+      `}</style>
     </div>
   );
 };

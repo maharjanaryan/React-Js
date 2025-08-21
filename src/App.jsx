@@ -12,6 +12,9 @@ import Layout from './pages/adminlayout/layout';
 import StaffManagement from './pages/adminlayout/StaffManage';
 import Analytics from './pages/adminlayout/Analytics';
 import Products from './pages/adminlayout/Products.jsx';
+import Report from './pages/adminlayout/Report.jsx';
+
+
 
 
 
@@ -25,6 +28,7 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/gallery" element={<CafeGallery />} />
 
+
         {/* Admin routes */}
         <Route path="/adminlayout/layout" element={<Layout />}>
           {/* Default admin page */}
@@ -34,6 +38,8 @@ function App() {
           <Route path="staffmanage" element={<StaffManagement />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="products" element={<Products />} />
+          <Route path="report" element={<Report />} />
+  
    
         </Route>
 

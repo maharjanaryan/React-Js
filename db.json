@@ -1,0 +1,10 @@
+{
+  "staff": [
+    {
+      "id": "efda",
+      "name": "King",
+      "role": "Chef",
+      "email": "king@gmail.com"
+    }
+  ]
+}

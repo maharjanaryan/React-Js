@@ -1,8 +1,68 @@
 import React from "react";
-import { AiOutlineShoppingCart, AiOutlineUser, AiOutlinePieChart, AiOutlineDollar } from "react-icons/ai";
+import {
+  AiOutlineShoppingCart,
+  AiOutlineUser,
+  AiOutlinePieChart,
+  AiOutlineDollar,
+} from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AdminOverview = () => {
+  // Chart data
+  const lineData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    datasets: [
+      {
+        label: "Revenue ($)",
+        data: [1200, 1900, 3000, 2500, 3200, 4000, 4500],
+        fill: false,
+        borderColor: "rgba(37, 99, 235, 1)", // blue-600
+        backgroundColor: "rgba(37, 99, 235, 0.2)",
+        tension: 0.3,
+      },
+    ],
+  };
+
+  const lineOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: { color: "#374151" }, // gray-700
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: "#6B7280" }, // gray-500
+      },
+      y: {
+        ticks: { color: "#6B7280" },
+      },
+    },
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Page Title */}
@@ -98,19 +158,31 @@ const AdminOverview = () => {
                   <td className="p-3 text-sm">#1001</td>
                   <td className="p-3 text-sm">John Doe</td>
                   <td className="p-3 text-sm">$120</td>
-                  <td className="p-3 text-sm"><span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Completed</span></td>
+                  <td className="p-3 text-sm">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+                      Completed
+                    </span>
+                  </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="p-3 text-sm">#1002</td>
                   <td className="p-3 text-sm">Jane Smith</td>
                   <td className="p-3 text-sm">$80</td>
-                  <td className="p-3 text-sm"><span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Pending</span></td>
+                  <td className="p-3 text-sm">
+                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">
+                      Pending
+                    </span>
+                  </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="p-3 text-sm">#1003</td>
                   <td className="p-3 text-sm">Mark Lee</td>
                   <td className="p-3 text-sm">$200</td>
-                  <td className="p-3 text-sm"><span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Cancelled</span></td>
+                  <td className="p-3 text-sm">
+                    <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">
+                      Cancelled
+                    </span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -120,10 +192,8 @@ const AdminOverview = () => {
         {/* Analytics Chart */}
         <div className="bg-white p-6 rounded-xl shadow-md">
           <h2 className="text-lg font-bold mb-4 text-gray-800">Revenue Analytics</h2>
-          <div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-lg">
-            <BsGraphUp size={60} className="text-gray-400 mb-3" />
-            <p className="text-gray-500 text-sm">Chart visualization will appear here</p>
-            <p className="text-gray-400 text-xs mt-2">(Integrate with Chart.js or Recharts)</p>
+          <div className="h-64">
+            <Line data={lineData} options={lineOptions} />
           </div>
         </div>
       </div>

@@ -88,7 +88,7 @@ const Analytics = () => {
 
       {/* Reservation Analytics Chart */}
       <div className="bg-white p-6 rounded-xl shadow mb-6" style={{ height: 300 }}>
-        <h2 className="text-lg font-bold mb-4">Reservation Analytics</h2>
+        <h2 className="text-lg font-bold ">Reservation Analytics</h2>
         <Pie data={reservationData} options={chartOptions} />
       </div>
     </div>
