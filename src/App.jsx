@@ -13,6 +13,7 @@ import StaffManagement from './pages/adminlayout/StaffManage';
 import Analytics from './pages/adminlayout/Analytics';
 import Products from './pages/adminlayout/Products.jsx';
 import Report from './pages/adminlayout/Report.jsx';
+import Signup from './pages/SignUp.jsx';
 
 
 
@@ -25,6 +26,7 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/gallery" element={<CafeGallery />} />
 

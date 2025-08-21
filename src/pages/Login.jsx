@@ -102,7 +102,7 @@ const Login = () => {
         <p className="text-center text-gray-700">
           Don't have an account?{" "}
           <NavLink
-            to="/admin/signup"
+            to="/signup"
             className="text-yellow-600 font-semibold hover:underline"
           >
             Sign Up

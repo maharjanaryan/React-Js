@@ -5,6 +5,12 @@
       "name": "King",
       "role": "Chef",
       "email": "king@gmail.com"
+    },
+    {
+      "name": "Queen",
+      "role": "Owner",
+      "email": "Queen@gmail.com",
+      "id": "4b3a"
     }
   ]
 }

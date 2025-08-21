@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineUserAdd, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import AddStaff from "../../components/AdminPart/AddStaff";
-
+import DeleteStaffModal from "../../components/AdminPart/DeleteStaffModal";
 
 const StaffManagement = () => {
   const [staffList, setStaffList] = useState([]);
@@ -9,6 +9,8 @@ const StaffManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [staffToDelete, setStaffToDelete] = useState(null);
 
   // Fetch staff from db.json
   useEffect(() => {
@@ -35,7 +37,7 @@ const StaffManagement = () => {
     if (isEditing) {
       // Edit existing staff
       fetch(`http://localhost:5000/staff/${editingId}`, {
-        method: "PUT", // Use PUT for updating
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newStaff),
       })
@@ -64,9 +66,13 @@ const StaffManagement = () => {
   };
 
   // Delete staff
-  const handleDelete = (id) => {
-    fetch(`http://localhost:5000/staff/${id}`, { method: "DELETE" })
-      .then(() => setStaffList((prev) => prev.filter((s) => s.id !== id)))
+  const handleDelete = () => {
+    fetch(`http://localhost:5000/staff/${staffToDelete.id}`, { method: "DELETE" })
+      .then(() => {
+        setStaffList((prev) => prev.filter((s) => s.id !== staffToDelete.id));
+        setStaffToDelete(null);
+        setDeleteModalOpen(false);
+      })
       .catch((err) => console.error("Error deleting staff:", err));
   };
 
@@ -76,6 +82,12 @@ const StaffManagement = () => {
     setEditingId(staff.id);
     setIsEditing(true);
     setIsModalOpen(true);
+  };
+
+  // Open delete confirmation modal
+  const handleOpenDeleteModal = (staff) => {
+    setStaffToDelete(staff);
+    setDeleteModalOpen(true);
   };
 
   // Reset modal
@@ -126,7 +138,7 @@ const StaffManagement = () => {
                     <AiOutlineEdit size={20} />
                   </button>
                   <button
-                    onClick={() => handleDelete(staff.id)}
+                    onClick={() => handleOpenDeleteModal(staff)}
                     className="text-red-500 hover:text-red-700"
                   >
                     <AiOutlineDelete size={20} />
@@ -138,13 +150,22 @@ const StaffManagement = () => {
         </table>
       </div>
 
+      {/* Add/Edit Staff Modal */}
       <AddStaff
         isOpen={isModalOpen}
         onClose={resetModal}
         newStaff={newStaff}
         handleChange={handleChange}
-        handleAddStaff={handleSaveStaff} // renamed to save for both add/edit
+        handleAddStaff={handleSaveStaff}
         isEditing={isEditing}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteStaffModal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        staffName={staffToDelete?.name}
+        handleConfirmDelete={handleDelete}
       />
     </div>
   );

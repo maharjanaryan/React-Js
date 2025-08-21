@@ -7,7 +7,9 @@ const DeleteStaffModal = ({ isOpen, onClose, staffName, handleConfirmDelete }) =
     <div className="fixed inset-0 bg-black/30 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-xl shadow-lg w-96 text-center">
         <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
-        <p className="mb-6">Are you sure you want to delete <strong>{staffName}</strong>?</p>
+        <p className="mb-6">
+          Are you sure you want to delete <strong>{staffName}</strong>?
+        </p>
 
         <div className="flex justify-center gap-4">
           <button
