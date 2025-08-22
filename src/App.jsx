@@ -14,6 +14,7 @@ import Analytics from './pages/adminlayout/Analytics';
 import Products from './pages/adminlayout/Products.jsx';
 import Report from './pages/adminlayout/Report.jsx';
 import Signup from './pages/SignUp.jsx';
+import Menu from './pages/Userpages/Menu.jsx';
 
 
 
@@ -41,9 +42,14 @@ function App() {
           <Route path="analytics" element={<Analytics />} />
           <Route path="products" element={<Products />} />
           <Route path="report" element={<Report />} />
-  
+
    
         </Route>
+
+        {/*User*/}
+        <Route path='menu' element={<Menu />} />
+
+        
 
       </Routes>
     </BrowserRouter>

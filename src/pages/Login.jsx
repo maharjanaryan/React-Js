@@ -8,10 +8,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginError, setLoginError] = useState("");
-
-  
-  const validEmail = "admin@gmail.com";
-  const validPassword = "12345";
+  const [isLoading, setIsLoading] = useState(false); // Added loading state
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -25,7 +22,7 @@ const Login = () => {
     setLoginError("");
   };
 
-  const handleBtnClick = () => {
+  const handleBtnClick = async () => {
     let hasError = false;
 
     if (email.trim() === "") {
@@ -40,11 +37,47 @@ const Login = () => {
 
     if (hasError) return;
 
-    // Check credentials
-    if (email === validEmail && password === validPassword) {
-      navigate("/adminlayout/layout");
-    } else {
-      setLoginError("Invalid email or password");
+    setIsLoading(true); // Start loading
+    setLoginError(""); // Clear previous errors
+
+    try {
+      // Make API call to Spring Boot backend
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(data));
+        
+        // Redirect based on user role from backend
+        if (data.role === "ADMIN") {
+          navigate("/adminlayout/layout");
+        } else {
+          navigate("/menu"); // Redirect to user dashboard
+        }
+      } else {
+        // Display error from backend
+        setLoginError(data.message || "Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setLoginError("Network error. Please try again later.");
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
+  };
+
+  // Handle form submission on Enter key
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleBtnClick();
     }
   };
 
@@ -65,6 +98,7 @@ const Login = () => {
             placeholder="Enter your email"
             value={email}
             onChange={handleEmailChange}
+            onKeyPress={handleKeyPress}
             className={`w-full px-5 py-3 border ${
               emailError ? "border-red-500" : "border-gray-300"
             } rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-600 transition`}
@@ -80,6 +114,7 @@ const Login = () => {
             placeholder="Enter your password"
             value={password}
             onChange={handlePasswordChange}
+            onKeyPress={handleKeyPress}
             className={`w-full px-5 py-3 border ${
               passwordError ? "border-red-500" : "border-gray-300"
             } rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-600 transition`}
@@ -97,9 +132,22 @@ const Login = () => {
         {/* Login button */}
         <button
           onClick={handleBtnClick}
-          className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-xl shadow-md transition-colors mb-4"
+          disabled={isLoading}
+          className={`w-full ${
+            isLoading ? "bg-yellow-700 cursor-not-allowed" : "bg-yellow-600 hover:bg-yellow-700"
+          } text-white font-semibold py-3 rounded-xl shadow-md transition-colors mb-4 flex items-center justify-center`}
         >
-          Login
+          {isLoading ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Logging in...
+            </>
+          ) : (
+            "Login"
+          )}
         </button>
 
         {/* Signup */}
