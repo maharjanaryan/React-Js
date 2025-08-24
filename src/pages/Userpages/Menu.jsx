@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../../components/userside/Header";
+import { useCart } from "../../context/CartContext";
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [search, setSearch] = useState("");
+  const { addToCart } = useCart(); // add item to cart
 
   // Fetch products from backend
   useEffect(() => {
@@ -21,6 +23,10 @@ const Menu = () => {
   const filteredItems = menuItems.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleAddToCart = (item) => {
+    addToCart(item); // just add to cart, no alert, no navigation
+  };
 
   return (
     <>
@@ -80,7 +86,10 @@ const Menu = () => {
                 <p className="text-gray-500 text-sm mb-4">{item.description}</p>
 
                 {/* Add to cart button */}
-                <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded-lg shadow-md transition">
+                <button
+                  onClick={() => handleAddToCart(item)}
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded-lg shadow-md transition"
+                >
                   + Add to Cart
                 </button>
               </div>

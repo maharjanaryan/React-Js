@@ -16,6 +16,8 @@ import Report from './pages/adminlayout/Report.jsx';
 import Signup from './pages/SignUp.jsx';
 import Menu from './pages/Userpages/Menu.jsx';
 import CartPage from './pages/Userpages/CartPage.jsx';
+import { CartProvider } from "./context/CartContext"; 
+
 
 
 
@@ -23,7 +25,7 @@ import CartPage from './pages/Userpages/CartPage.jsx';
 
 function App() {
   return (
-   
+    <CartProvider>
     <BrowserRouter>
       <Routes>
         {/* Public routes */}
@@ -56,7 +58,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
- 
+ </CartProvider>
   );
 }
 
