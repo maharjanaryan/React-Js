@@ -15,6 +15,7 @@ import Products from './pages/adminlayout/Products.jsx';
 import Report from './pages/adminlayout/Report.jsx';
 import Signup from './pages/SignUp.jsx';
 import Menu from './pages/Userpages/Menu.jsx';
+import CartPage from './pages/Userpages/CartPage.jsx';
 
 
 
@@ -22,6 +23,7 @@ import Menu from './pages/Userpages/Menu.jsx';
 
 function App() {
   return (
+   
     <BrowserRouter>
       <Routes>
         {/* Public routes */}
@@ -48,11 +50,13 @@ function App() {
 
         {/*User*/}
         <Route path='menu' element={<Menu />} />
+        <Route path='cartpage' element={<CartPage />} />
 
         
 
       </Routes>
     </BrowserRouter>
+ 
   );
 }
 

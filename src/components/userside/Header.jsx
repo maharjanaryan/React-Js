@@ -32,7 +32,7 @@ const Header = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/cart" className={getNavLinkClass}>
+          <NavLink to="/cartpage" className={getNavLinkClass}>
             Cart
           </NavLink>
         </li>
