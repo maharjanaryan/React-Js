@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../../components/userside/Header";
 import { useCart } from "../../context/CartContext";
+import Footer from "../../components/Footer";
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);

@@ -12,7 +12,7 @@ const CartPage = () => {
 
   // Calculate fees
   const deliveryFee = deliveryOption === "Delivery" ? 3.99 : 0;
-  const tax = 0.2;
+  const tax = 0.2; // flat tax for demo
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const total = subtotal + deliveryFee + tax;
 
@@ -124,7 +124,15 @@ const CartPage = () => {
                 <span>${total.toFixed(2)}</span>
               </div>
 
-              <button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg shadow transition mb-3">
+              {/* ✅ Send data to billing */}
+              <button
+                className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg shadow transition mb-3"
+                onClick={() =>
+                  navigate("/billingpage", {
+                    state: { cart, deliveryOption, subtotal, deliveryFee, tax, total },
+                  })
+                }
+              >
                 Proceed to Checkout
               </button>
 

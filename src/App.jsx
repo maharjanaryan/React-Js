@@ -17,6 +17,8 @@ import Signup from './pages/SignUp.jsx';
 import Menu from './pages/Userpages/Menu.jsx';
 import CartPage from './pages/Userpages/CartPage.jsx';
 import { CartProvider } from "./context/CartContext"; 
+import BillingPage from './pages/Userpages/BillingPage.jsx';
+import Profile from './pages/Userpages/Profile.jsx';
 
 
 
@@ -53,6 +55,8 @@ function App() {
         {/*User*/}
         <Route path='menu' element={<Menu />} />
         <Route path='cartpage' element={<CartPage />} />
+        <Route path='billingpage' element={<BillingPage />} />
+        <Route path='profile' element={<Profile />} />
 
         
 
