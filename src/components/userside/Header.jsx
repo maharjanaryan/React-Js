@@ -1,11 +1,26 @@
 import { NavLink } from "react-router-dom";
-import { useCart } from "../../context/CartContext"; // ✅ import CartContext
+import { useCart } from "../../context/CartContext";
+import { useState, useEffect } from "react";
 
 const Header = () => {
-  const { cart } = useCart(); // get cart items
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0); // total items
+  const { cart } = useCart();
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0); 
+  const [user, setUser] = useState(null);
 
-  // Function to determine active link styling
+
+  useEffect(() => {
+    const fetchUserData = () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) {
+        setUser(storedUser);
+      } else {
+        setUser({ firstName: "User" });
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const getNavLinkClass = ({ isActive }) =>
     isActive
       ? "text-orange-600 font-semibold border-b-2 border-orange-600"
@@ -46,12 +61,10 @@ const Header = () => {
         </li>
         <li>
           <NavLink to="/profile" className="flex items-center">
-            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-orange-100 bg-gray-200 hover:scale-105 transition">
-              <img
-                src="/images/admin.png"
-                alt="Profile"
-                className="h-full w-full object-cover"
-              />
+            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-orange-100 bg-orange-500 text-white flex items-center justify-center hover:scale-105 transition">
+              <span className="font-semibold text-lg">
+                {user?.firstName ? user.firstName[0]?.toUpperCase() : "U"}
+              </span>
             </div>
           </NavLink>
         </li>

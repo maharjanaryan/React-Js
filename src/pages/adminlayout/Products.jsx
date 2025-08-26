@@ -91,7 +91,7 @@ const Products = () => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:8080/api/products/${editingProduct.id}`, formData, {
+      const res = await axios.put(`http://localhost:8080/api/products/Rs{editingProduct.id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       
@@ -106,7 +106,7 @@ const Products = () => {
   // Delete product
   const handleDeleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/api/products/${id}`);
+      await axios.delete(`http://localhost:8080/api/products/Rs{id}`);
       setProducts(products.filter(p => p.id !== id));
     } catch (err) {
       console.error("Error deleting product:", err);
@@ -136,7 +136,7 @@ const Products = () => {
         <input
           type="number"
           name="price"
-          placeholder="Price ($)"
+          placeholder="Price (Rs)"
           value={isEditing ? editingProduct.price : newProduct.price}
           onChange={handleChange}
           className="border p-2 rounded"
@@ -193,7 +193,7 @@ const Products = () => {
               <tr className="bg-gray-100">
                 <th className="p-3 text-left">ID</th>
                 <th className="p-3 text-left">Name</th>
-                <th className="p-3 text-left">Price ($)</th>
+                <th className="p-3 text-left">Price (Rs)</th>
                 <th className="p-3 text-left">Description</th>
                 <th className="p-3 text-left">Image</th>
                 <th className="p-3 text-left">Actions</th>

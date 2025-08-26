@@ -49,7 +49,7 @@ const CartPage = () => {
                     <div>
                       <h3 className="font-semibold text-lg">{item.name}</h3>
                       <p className="text-yellow-600 font-semibold">
-                        ${item.price.toFixed(2)}
+                        Rs {item.price.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -98,7 +98,7 @@ const CartPage = () => {
                       checked={deliveryOption === option}
                       onChange={() => setDeliveryOption(option)}
                     />
-                    {option} {option === "Delivery" ? "(+$3.99)" : ""}
+                    {option} {option === "Delivery" ? "(+Rs 50)" : ""}
                   </label>
                 ))}
               </div>
@@ -109,19 +109,19 @@ const CartPage = () => {
               <h3 className="font-semibold mb-4">Order Summary</h3>
               <div className="flex justify-between text-gray-700 mb-2">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>Rs {subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-700 mb-2">
                 <span>Delivery Fee</span>
-                <span>${deliveryFee.toFixed(2)}</span>
+                <span>Rs {deliveryFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-700 mb-2">
                 <span>Tax</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>Rs {tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold text-lg text-orange-600 mb-4">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>Rs {total.toFixed(2)}</span>
               </div>
 
               {/* ✅ Send data to billing */}

@@ -79,7 +79,7 @@ const Menu = () => {
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold">{item.name}</h3>
                   <span className="text-yellow-600 font-medium">
-                    ${item.price.toFixed(2)}
+                    Rs {item.price.toFixed(2)}
                   </span>
                 </div>
 
