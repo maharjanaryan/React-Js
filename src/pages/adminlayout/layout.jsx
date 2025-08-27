@@ -18,6 +18,14 @@ const Layout = () => {
     }
   })
 
+    const navigate = useNavigate();
+  
+      useEffect(() => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (!storedUser || storedUser.role.toLowerCase() !== "admin") {
+        navigate("/login", { replace: true });
+      }
+    }, [navigate]);
 
   const closeSidebar = () => setIsOpen(false);
 
