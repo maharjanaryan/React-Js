@@ -7,6 +7,7 @@ const Products = () => {
     name: "",
     price: "",
     description: "",
+    category: "drinks", // Default category
     image: null,
   });
   const [editingProduct, setEditingProduct] = useState(null);
@@ -57,6 +58,7 @@ const Products = () => {
     formData.append("name", newProduct.name);
     formData.append("price", newProduct.price);
     formData.append("description", newProduct.description);
+    formData.append("category", newProduct.category);
     formData.append("image", newProduct.image);
 
     try {
@@ -64,7 +66,7 @@ const Products = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setProducts([...products, res.data]);
-      setNewProduct({ name: "", price: "", description: "", image: null });
+      setNewProduct({ name: "", price: "", description: "", category: "drinks", image: null });
       // Reset file input
       document.querySelector('input[type="file"]').value = "";
     } catch (err) {
@@ -86,12 +88,13 @@ const Products = () => {
     formData.append("name", editingProduct.name);
     formData.append("price", editingProduct.price);
     formData.append("description", editingProduct.description);
+    formData.append("category", editingProduct.category);
     if (editingProduct.image) {
       formData.append("image", editingProduct.image);
     }
 
     try {
-      const res = await axios.put(`http://localhost:8080/api/products/Rs{editingProduct.id}`, formData, {
+      const res = await axios.put(`http://localhost:8080/api/products/${editingProduct.id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       
@@ -106,7 +109,7 @@ const Products = () => {
   // Delete product
   const handleDeleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/api/products/Rs{id}`);
+      await axios.delete(`http://localhost:8080/api/products/${id}`);
       setProducts(products.filter(p => p.id !== id));
     } catch (err) {
       console.error("Error deleting product:", err);
@@ -152,6 +155,20 @@ const Products = () => {
           className="border p-2 rounded"
           required
         />
+        
+        {/* Category Selector */}
+        <select
+          name="category"
+          value={isEditing ? editingProduct.category : newProduct.category}
+          onChange={handleChange}
+          className="border p-2 rounded"
+          required
+        >
+          <option value="drinks">Drinks</option>
+          <option value="dessert">Dessert</option>
+          <option value="food">Food</option>
+        </select>
+        
         <input 
           type="file" 
           onChange={handleFileChange} 
@@ -194,6 +211,7 @@ const Products = () => {
                 <th className="p-3 text-left">ID</th>
                 <th className="p-3 text-left">Name</th>
                 <th className="p-3 text-left">Price (Rs)</th>
+                <th className="p-3 text-left">Category</th>
                 <th className="p-3 text-left">Description</th>
                 <th className="p-3 text-left">Image</th>
                 <th className="p-3 text-left">Actions</th>
@@ -205,6 +223,7 @@ const Products = () => {
                   <td className="p-3">{p.id}</td>
                   <td className="p-3">{p.name}</td>
                   <td className="p-3">{p.price}</td>
+                  <td className="p-3 capitalize">{p.category}</td>
                   <td className="p-3">{p.description}</td>
                   <td className="p-3">
                     {p.imageUrl && (

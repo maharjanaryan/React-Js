@@ -1,8 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
 
-export const CartContext = createContext();
+// Create the context
+const CartContext = createContext();
 
+// Create the provider component
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
@@ -30,14 +32,24 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+    <CartContext.Provider value={{ 
+      cart, 
+      addToCart, 
+      removeFromCart, 
+      updateQuantity,
+      clearCart
+    }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-
+// Custom hook to use the cart context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {

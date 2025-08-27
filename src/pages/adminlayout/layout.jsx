@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/AdminPart/Header";
 import Sidebar from "../../components/AdminPart/Sidebar";
 import Footer from "../../components/Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  // Function to close sidebar (used for overlay & sidebar links)
+  const Navigate = useNavigate();
+  useEffect(()=>{
+    const user= localStorage.getItem("user")
+    const userData= user? JSON.parse(user):null
+    if (!userData){
+      Navigate("/login");
+    }
+  })
+
+
   const closeSidebar = () => setIsOpen(false);
 
   return (

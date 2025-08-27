@@ -12,7 +12,7 @@ const StaffManagement = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [staffToDelete, setStaffToDelete] = useState(null);
 
-  // Fetch staff from db.json
+ 
   useEffect(() => {
     fetch("http://localhost:5000/staff")
       .then((res) => res.json())
@@ -20,13 +20,11 @@ const StaffManagement = () => {
       .catch((err) => console.error("Error fetching staff:", err));
   }, []);
 
-  // Handle form input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewStaff((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Add or edit staff
   const handleSaveStaff = () => {
     const { name, role, email } = newStaff;
     if (!name || !role || !email) {
@@ -35,7 +33,7 @@ const StaffManagement = () => {
     }
 
     if (isEditing) {
-      // Edit existing staff
+
       fetch(`http://localhost:5000/staff/${editingId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -50,7 +48,7 @@ const StaffManagement = () => {
         })
         .catch((err) => console.error("Error updating staff:", err));
     } else {
-      // Add new staff
+
       fetch("http://localhost:5000/staff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -65,7 +63,7 @@ const StaffManagement = () => {
     }
   };
 
-  // Delete staff
+
   const handleDelete = () => {
     fetch(`http://localhost:5000/staff/${staffToDelete.id}`, { method: "DELETE" })
       .then(() => {
@@ -76,7 +74,7 @@ const StaffManagement = () => {
       .catch((err) => console.error("Error deleting staff:", err));
   };
 
-  // Open modal for editing
+
   const handleEdit = (staff) => {
     setNewStaff({ name: staff.name, role: staff.role, email: staff.email });
     setEditingId(staff.id);
@@ -84,13 +82,13 @@ const StaffManagement = () => {
     setIsModalOpen(true);
   };
 
-  // Open delete confirmation modal
+
   const handleOpenDeleteModal = (staff) => {
     setStaffToDelete(staff);
     setDeleteModalOpen(true);
   };
 
-  // Reset modal
+
   const resetModal = () => {
     setNewStaff({ name: "", role: "", email: "" });
     setIsEditing(false);
@@ -150,7 +148,7 @@ const StaffManagement = () => {
         </table>
       </div>
 
-      {/* Add/Edit Staff Modal */}
+
       <AddStaff
         isOpen={isModalOpen}
         onClose={resetModal}
@@ -160,7 +158,6 @@ const StaffManagement = () => {
         isEditing={isEditing}
       />
 
-      {/* Delete Confirmation Modal */}
       <DeleteStaffModal
         isOpen={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}

@@ -1,6 +1,6 @@
 // src/App.jsx
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 
 // Public pages
 import Home from './pages/Home';
@@ -26,11 +26,11 @@ import Profile from './pages/Userpages/Profile.jsx';
 
 
 function App() {
+
   return (
     <CartProvider>
-    <BrowserRouter>
+    <BrowserRouter>  
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -39,10 +39,10 @@ function App() {
 
 
         {/* Admin routes */}
-        <Route path="/adminlayout/layout" element={<Layout />}>
-          {/* Default admin page */}
+        <Route path="/adminlayout/layout" element={ <Layout /> }>
+        
           <Route index element={<AdminOverview />} />
-          {/* Specific admin pages */}
+ 
           <Route path="overview" element={<AdminOverview />} />
           <Route path="staffmanage" element={<StaffManagement />} />
           <Route path="analytics" element={<Analytics />} />

@@ -8,7 +8,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Added loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -37,53 +37,47 @@ const Login = () => {
 
     if (hasError) return;
 
-    setIsLoading(true); // Start loading
-    setLoginError(""); // Clear previous errors
+    setIsLoading(true);
+    setLoginError("");
 
     try {
-      // Make API call to Spring Boot backend
       const response = await fetch("/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Store user data in localStorage
         localStorage.setItem("user", JSON.stringify(data));
-        
-        // Redirect based on user role from backend
-        if (data.role === "ADMIN") {
+
+        // Parse the stored user to access role
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+
+        if (storedUser.role && storedUser.role.toLowerCase() === "admin") {
           navigate("/adminlayout/layout");
         } else {
-          navigate("/menu"); // Redirect to user dashboard
+          navigate("/menu");
         }
       } else {
-        // Display error from backend
         setLoginError(data.message || "Invalid email or password");
       }
     } catch (error) {
       console.error("Login error:", error);
       setLoginError("Network error. Please try again later.");
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
-  // Handle form submission on Enter key
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleBtnClick();
-    }
+    if (e.key === "Enter") handleBtnClick();
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-400 to-black relative">
-      {/* Fallback background pattern */}
+      {/* Background Image */}
       <div className="absolute inset-0 bg-[url('/images/outdoor.png')] opacity-20"></div>
 
       {/* Login Card */}
@@ -122,14 +116,14 @@ const Login = () => {
           {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
         </div>
 
-        {/* Login error */}
+        {/* Login Error */}
         {loginError && (
           <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
             {loginError}
           </div>
         )}
 
-        {/* Login button */}
+        {/* Login Button */}
         <button
           onClick={handleBtnClick}
           disabled={isLoading}
@@ -150,13 +144,10 @@ const Login = () => {
           )}
         </button>
 
-        {/* Signup */}
+        {/* Signup Link */}
         <p className="text-center text-gray-700">
           Don't have an account?{" "}
-          <NavLink
-            to="/signup"
-            className="text-yellow-600 font-semibold hover:underline"
-          >
+          <NavLink to="/signup" className="text-yellow-600 font-semibold hover:underline">
             Sign Up
           </NavLink>
         </p>
